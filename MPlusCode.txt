@@ -1,0 +1,101 @@
+title:  Latent class model 1: SES
+
+data:  file is  "C:\Users\matth\Documents\Mplus\lcadataset.csv";
+ Variable:
+    names = STUDYID agesel protreat delay detect pared1 pared2 pared3 foreign 
+  employed delay45 income1 income2 educ1 educ2 bmi1 bmi2 smok1 smok2
+   heartx diabetes marital2 nowins2 RUCA2Ax lossjobx  financex transx
+    regularx screen surgdist diagdist job1 job2 job3 surgsq diagsq logsurg
+     logdiag cubsurg cubdiag surgmax diagmax surgmaxs diagmaxs surg1 surg2
+      surg3 surgalt1 surgalt2 diag1 diag2 diag3  diagalt1 diagalt2 ;
+  Missing are ALL (999) ;
+  Idvariable = STUDYID ; 
+  usevariables = income1 income2 educ1 educ2 foreign job1
+   job2 job3  marital2 agesel;
+  Categorical  = income1 income2 educ1 educ2 foreign job1
+   job2 job3  marital2;
+  classes = c(3);
+  Analysis: 
+  Type=mixture; starts = 100 10; stiterations=100;
+  LRTSTARTS = 0 0 400 100;
+
+  MODEL:
+  %OVERALL%
+  c ON agesel ; 
+
+  PLOT: TYPE IS PLOT3; !requests item-response probability plots;
+      SERIES IS income1 income2 educ1 educ2 foreign job1
+   job2 job3  marital2(*) ;
+
+Savedata:
+  file is lca1_output3class_v2.txt ;
+  save is cprob;
+  format is free;
+
+ 
+title:  Latent class model 2: Care use
+
+data:  file is  "C:\Users\Matthew\Documents\Mplus\lcadataset.csv";
+ Variable:
+    names = STUDYID protreat delay detect pared1 pared2 pared3 foreign 
+  employed delay45 income1 income2 educ1 educ2 bmi1 bmi2 smok1 smok2
+   heartx diabetes marital2 nowins2 RUCA2Ax lossjobx  financex transx
+    regularx screen surgdist diagdist job1 job2 job3 surgsq diagsq logsurg
+     logdiag cubsurg cubdiag surgmax diagmax surgmaxs diagmaxs surg1 surg2
+      surg3 surgalt1 surgalt2 diag1 diag2 diag3  diagalt1 diagalt2 ;
+  Missing are ALL (999) ;
+  Idvariable = STUDYID ; 
+  usevariables = nowins2 RUCA2Ax lossjobx financex transx;
+  Categorical  = nowins2 RUCA2Ax lossjobx financex transx;
+  classes = c(1);
+  Analysis: 
+  Type=mixture; starts = 100 10; stiterations=100;
+  LRTSTARTS = 0 0 400 100;
+
+  PLOT: TYPE IS PLOT3; !requests item-response probability plots;
+      SERIES IS  nowins2 RUCA2Ax lossjobx financex transx(*) ;
+
+Savedata:
+  file is lca2_output1class.txt ;
+  save is cprob;
+  format is free;
+
+  Output:  
+  tech11 tech14;
+
+
+
+
+title:  Latent class model 3: Care use
+
+data:  file is  "C:\Users\Matthew\Documents\Mplus\lcadataset.csv";
+ Variable:
+  names = STUDYID protreat delay detect pared1 pared2 pared3 foreign 
+  employed delay45 income1 income2 educ1 educ2 bmi1 bmi2 smok1 smok2
+   heartx diabetes marital2 nowins2 RUCA2Ax lossjobx  financex transx
+    regularx screen surgdist diagdist job1 job2 job3 surgsq diagsq logsurg
+     logdiag cubsurg cubdiag surgmax diagmax surgmaxs diagmaxs surg1 surg2
+      surg3 surgalt1 surgalt2 diag1 diag2 diag3  diagalt1 diagalt2 ;
+   
+  Missing are ALL (999) ;
+  Idvariable = STUDYID ; 
+  usevariables = regularx screen detect diagalt1 diagalt2
+      surgalt1 surgalt2    ;
+  Categorical  = regularx screen detect diagalt1 diagalt2
+      surgalt1 surgalt2    ;
+  classes = c(5);
+  Analysis: 
+  Type=mixture; starts = 100 10; stiterations=100;
+  LRTSTARTS = 0 0 400 100;
+
+  PLOT: TYPE IS PLOT3; !requests item-response probability plots;
+      SERIES IS  regularx screen detect diagalt1 diagalt2
+      surgalt1 surgalt2  (*) ;
+
+Savedata:
+  file is lca3_output5class.txt ;
+  save is cprob;
+  format is free;
+
+ output: tech11 tech14;
+
